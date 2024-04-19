@@ -1,0 +1,91 @@
+class Stroka
+{
+private:
+	unsigned int length;
+	char* user_stroka = new char[1] {'\0'};
+
+public:
+	Stroka() {};
+	Stroka(const char* get_user_stroka);
+	Stroka(const char* get_user_stroka, unsigned int set_user_len);
+	~Stroka();
+
+	Stroka operator+(Stroka& get_user_value);
+
+	Stroka flip(Stroka& get_user_value);
+
+	void print();
+	int getLength(const char* get_stroka);
+};
+
+Stroka::Stroka(const char* get_user_stroka)
+{
+	length = getLength(get_user_stroka);
+
+	user_stroka = new char[length]();
+
+	for (int i = 0; i < length; ++i)
+		user_stroka[i] = get_user_stroka[i];
+}
+
+Stroka::Stroka(const char* get_user_stroka, unsigned int get_user_length)
+{
+	length = get_user_length;
+	user_stroka = new char[length]();
+
+	for (int i = 0; i < length; ++i)
+		user_stroka[i] = get_user_stroka[i];
+}
+
+Stroka::~Stroka()
+{
+	delete user_stroka;
+}
+
+Stroka Stroka::operator+(Stroka& get_user_value)
+{
+	int new_length = get_user_value.length + length;
+
+	Stroka new_strok(user_stroka, new_length);
+
+	for (int i = 0; i < get_user_value.length; ++i)
+	{
+		new_strok.user_stroka[i + length] = get_user_value.user_stroka[i];
+	}
+
+	return new_strok;
+}
+
+/*Stroka Stroka::flip(Stroka& get_user_value)
+{
+	char first_simbol;
+	//copy stroka
+	for (int i = 0; i < (get_user_value.length / 2); ++i)
+	{
+		first_simbol = get_user_value.user_stroka[i];
+		get_user_value.user_stroka[i] = get_user_value.user_stroka[get_user_value.length - i];
+		get_user_value.user_stroka[get_user_value.length - i] = first_simbol;
+	}
+
+	return;//return new_stroka 
+}*/
+
+void Stroka::print()
+{
+	for (int i = 0; i < length; ++i)
+		std::cout << user_stroka[i];
+	std::cout << std::endl;
+}
+
+int Stroka::getLength(const char* get_stroka)
+{
+	int result = 0;
+	while (*get_stroka != '\0')
+	{
+		++get_stroka;
+		++result;
+	}
+
+	return result;
+
+}
